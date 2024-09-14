@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temperature Converter</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    background-image: url("nature.jpg");
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #46809fa5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-top: 0;
+    color: #333;
+    text-align: center;
+}
+
+.converter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.conversion-input {
+    display: flex;
+    align-items: center;
+}
+
+input[type="number"],
+select {
+    padding: 8px;
+    margin-right: 10px;
+}
+
+button {
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 8px 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#result-container {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #e9e9e9;
+    margin-bottom: 20px;
+}
+
+#result {
+    font-size: 18px;
+}
+
+.common-measures {
+    margin-top: 20px;
+}
+
+.common-measures h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.common-measures ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.common-measures li {
+    margin-bottom: 5px;
+}
+
+#swapButton {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* Make it round */
+    border: none;
+    background-color: #007bff; /* Button color */
+    color: #fff; /* Text color */
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    margin-right: 10px; /* Add space between swap button and "to" units dropdown */
+}
+
+/* Current temperature styles */
+#current-temperature {
+    font-size: 16px;
+    color: #060606;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Footer styles */
+footer {
+    background-color: #333; /* Dark background for the footer */
+    color: #fff; /* White text color */
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+.footer-info {
+    color: #fff; /* Text color */
+    margin-bottom: 10px; /* Adjust margin as needed */
+}
+.footer-content {
+    padding: 10px; /* Adjust padding as needed */
+    color: #fff; /* Text color */
+}
+
+.conversion-links {
+    width: 100%;
+    background-color: #333; /* Optional: sets a background color for the footer */
+    text-align: center; /* Centers the links */
+    padding: 10px 0; /* Add padding to the top and bottom */
+}
+
+.conversion-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.conversion-links ul li {
+    display: inline; /* Displays the list items in a line */
+    margin-right: 10px; /* Spacing between the list items */
+}
+
+.conversion-links a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.conversion-links a:hover {
+    text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2 id="welcome-message"></h2>
+    <div class="converter">
+        <div class="conversion-input">
+            <input type="number" id="temperature" placeholder="Enter temperature">
+            <select id="fromUnit">
+                <option value="celsius">Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="kelvin">Kelvin (K)</option>
+            </select>
+            <button id="swapButton"> ↔ </button>
+            <select id="toUnit">
+                <option value="celsius">Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="kelvin">Kelvin (K)</option>
+            </select>
+        </div><br>
+        <button id="convertButton">Convert</button>
+    </div>
+    <div id="result-container">
+        <div id="result"></div>
+    </div>
+    <div class="common-measures">
+        <h3>Common Temperature Units:</h3>
+        <ul>
+            <li>Celsius (°C): Celsius to Fahrenheit - (°C × 9/5) + 32</li>
+            <li>Fahrenheit (°F): Fahrenheit to Celsius - (°F - 32) × 5/9</li>
+            <li>Kelvin (K): Kelvin to Celsius - K - 273.15</li>
+        </ul>
+    </div>
+    <div id="current-temperature"></div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <p class="developers">Developed by K Ajay Babu, P Bhuvan Chandra</p>
+        <div class="conversion-links">
+            <p>&copy; 2024, Conversion Tools.</p>
+            <p>Try our new conversions:</p>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="unit.html">Unit Converter</a></li>
+                <li><a href="temperature.html">Temperature Conversion</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Welcome message
+function typeWelcomeMessage() {
+    const welcomeMessage = "Welcome to the Temperature Converter";
+    const welcomeElement = document.getElementById("welcome-message");
+    const typingSpeed = 100; // Adjust typing speed as needed
+
+    let i = 0;
+    function type() {
+        if (i < welcomeMessage.length) {
+            welcomeElement.innerHTML += welcomeMessage.charAt(i);
+            i++;
+            setTimeout(type, typingSpeed);
+        }
+    }
+    type();
+}
+
+// Swap units
+function swapUnits() {
+    var fromUnit = document.getElementById("fromUnit").value;
+    var toUnit = document.getElementById("toUnit").value;
+
+    document.getElementById("fromUnit").value = toUnit;
+    document.getElementById("toUnit").value = fromUnit;
+}
+
+// Conversion function
+function convertUnits() {
+    var temperature = parseFloat(document.getElementById("temperature").value);
+    var fromUnit = document.getElementById("fromUnit").value;
+    var toUnit = document.getElementById("toUnit").value;
+    var result;
+
+    // Perform temperature conversion calculation
+    if (fromUnit === toUnit) {
+        result = temperature; // If the units are the same, no conversion needed
+    } else {
+        switch (fromUnit) {
+            case 'celsius':
+                switch (toUnit) {
+                    case 'fahrenheit':
+                        result = (temperature * 9/5) + 32;
+                        break;
+                    case 'kelvin':
+                        result = temperature + 273.15;
+                        break;
+                }
+                break;
+            case 'fahrenheit':
+                switch (toUnit) {
+                    case 'celsius':
+                        result = (temperature - 32) * 5/9;
+                        break;
+                    case 'kelvin':
+                        result = (temperature + 459.67) * 5/9;
+                        break;
+                }
+                break;
+            case 'kelvin':
+                switch (toUnit) {
+                    case 'celsius':
+                        result = temperature - 273.15;
+                        break;
+                    case 'fahrenheit':
+                        result = (temperature * 9/5) - 459.67;
+                        break;
+                }
+                break;
+        }
+    }
+
+    // Display the result
+    document.getElementById("result").innerText = result.toFixed(2) + " " + toUnit;
+}
+
+// Fetch current temperature and country
+// Fetch current temperature and country
+function fetchCurrentTemperature() {
+    const apiKey = 'ca8e9eb0ba6081081a7d175d1f0ac343'; // Your actual API key
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Tamilnadu,IN&units=metric&appid=${apiKey}`;
+
+    fetch(apiUrl)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        .then(response => response.json())
+        .then(data => {
+            const temperature = data.main.temp; 
+            const city = data.name;
+            const country = data.sys.country;
+            document.getElementById("current-temperature").innerText = `Current Temperature in ${city}, ${country}: ${temperature.toFixed(2)} °C`;
+        })
+        .catch(error => {
+            console.error("Error fetching temperature data:", error);
+            document.getElementById("current-temperature").innerText = "Could not fetch current temperature.";
+        });
+}
+
+// Add event listeners
+document.getElementById("convertButton").addEventListener("click", convertUnits);
+document.getElementById("swapButton").addEventListener("click", swapUnits);
+window.addEventListener("load", typeWelcomeMessage);
+window.addEventListener("load", fetchCurrentTemperature);
+</script>
+
+</body>
+</html>
