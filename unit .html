@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            background-image: url("distance.webp");
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #1b93ddd1;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+
+        .converter {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .conversion-input {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="number"],
+        select {
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result-container {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e9e9e9;
+            margin-bottom: 20px;
+        }
+
+        #result {
+            font-size: 18px;
+        }
+
+        .common-measures {
+            margin-top: 20px;
+        }
+
+        .common-measures h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .common-measures ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .common-measures li {
+            margin-bottom: 5px;
+        }
+
+        #swapButton {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%; /* Make it round */
+            border: none;
+            background-color: #007bff; /* Button color */
+            color: #fff; /* Text color */
+            font-size: 16px;
+            cursor: pointer;
+            display: flex; /* Use flexbox */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            margin-right: 10px; /* Add space between swap button and "to" units dropdown */
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #333333; /* Dark background for the footer */
+            color: #fff; /* White text color */
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+        .footer-info {
+            color: #fff; /* Text color */
+            margin-bottom: 10px; /* Adjust margin as needed */
+        }
+        .footer-content {
+            padding: 10px; /* Adjust padding as needed */
+            color: #fff; /* Text color */
+        }
+
+        .conversion-links {
+            width: 100%;
+            background-color: #333; /* Optional: sets a background color for the footer */
+            text-align: center; /* Centers the links */
+            padding: 10px 0; /* Add padding to the top and bottom */
+        }
+
+        .conversion-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .conversion-links ul li {
+            display: inline; /* Displays the list items in a line */
+            margin-right: 10px; /* Spacing between the list items */
+        }
+
+        .conversion-links a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .conversion-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 id="welcome-message"></h2>
+    <div class="converter">
+        <div class="conversion-input">
+            <input type="number" id="unit" placeholder="Enter value">
+            <select id="fromUnit">
+                <option value="m">Meter (m)</option>
+                <option value="km">Kilometer (km)</option>
+                <option value="mm">Millimeter (mm)</option>
+                <option value="um">Micrometer (µm)</option>
+                <option value="nm">Nanometer (nm)</option>
+                <option value="yard">Yard (yd)</option>
+                <option value="mile">Mile (mi)</option>
+                <option value="cm">Centimeter (cm)</option> <!-- Added -->
+                <option value="inch">Inch (in)</option> <!-- Added -->
+                <option value="foot">Foot (ft)</option> <!-- Added -->
+            </select>
+            <button id="swapButton">↔</button>
+            <select id="toUnit">
+                <option value="m">Meter (m)</option>
+                <option value="km">Kilometer (km)</option>
+                <option value="mm">Millimeter (mm)</option>
+                <option value="um">Micrometer (µm)</option>
+                <option value="nm">Nanometer (nm)</option>
+                <option value="yard">Yard (yd)</option>
+                <option value="mile">Mile (mi)</option>
+                <option value="cm">Centimeter (cm)</option> <!-- Added -->
+                <option value="inch">Inch (in)</option> <!-- Added -->
+                <option value="foot">Foot (ft)</option> <!-- Added -->
+            </select>
+        </div><br>
+        <button id="convertButton">Convert</button>
+    </div>
+    <div id="result-container">
+        <div id="result"></div>
+    </div>
+    <div class="common-measures">
+        <h3>Common Measurement Values</h3>
+        <ul>
+            <li>1 km = 1000 m</li>
+            <li>1 m = 100 cm</li>
+            <li>1 m = 1000 mm</li>
+            <li>1 inch = 2.54 cm</li>
+            <li>1 foot = 12 inches</li>
+            <li>1 yard = 3 feet</li>
+            <li>1 mile = 1760 yards</li>
+            <!-- Add more common measurement values as needed -->
+        </ul>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <p class="developers">Developed by K Ajay Babu,P Bhuvan Chandra</p>
+        <div class="conversion-links">
+            <p>&copy; 2024, Conversion Tools.</p>
+            <p>Try our new conversions:</p>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="unit.html">Unit Conversion</a></li>
+                <li><a href="temperature.html">Temperature Conversion</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function convertUnits() {
+        var unit = parseFloat(document.getElementById("unit").value);
+        var fromUnit = document.getElementById("fromUnit").value;
+        var toUnit = document.getElementById("toUnit").value;
+
+        // Conversion factors based on meters
+        var conversionFactors = {
+            'm': 1,
+            'km': 1000,
+            'cm': 0.01,
+            'mm': 0.001,
+            'um': 1e-6,
+            'nm': 1e-9,
+            'mile': 1609.34,
+            'yard': 0.9144,
+            'foot': 0.3048,
+            'inch': 0.0254
+        };
+
+        // Perform unit conversion calculation
+        var result;
+        if (fromUnit === toUnit) {
+            result = unit; // If the units are the same, no conversion needed
+        } else {
+            var factor = conversionFactors[fromUnit] / conversionFactors[toUnit];
+            result = unit * factor;
+        }
+
+        // Display the result
+        document.getElementById("result").innerText = result + " " + toUnit;
+    }
+
+    // Add event listeners for the convert button and unit type changes
+    document.getElementById("convertButton").addEventListener("click", convertUnits);
+    document.getElementById("fromUnit").addEventListener("change", convertUnits);
+    document.getElementById("toUnit").addEventListener("change", convertUnits);
+
+    // Function to swap units
+    function swapUnits() {
+        var fromUnit = document.getElementById("fromUnit").value;
+        var toUnit = document.getElementById("toUnit").value;
+
+        // Swap the selected units
+        document.getElementById("fromUnit").value = toUnit;
+        document.getElementById("toUnit").value = fromUnit;
+
+        // Trigger conversion after swapping
+        convertUnits();
+    }
+
+    // Function to simulate typing effect for welcome message
+    function typeWelcomeMessage() {
+        const welcomeMessage = "Welcome to the Unit Converter";
+        const welcomeElement = document.getElementById("welcome-message");
+        const typingSpeed = 100; // Adjust typing speed as needed
+
+        let i = 0;
+        function type() {
+            if (i < welcomeMessage.length) {
+                welcomeElement.innerHTML += welcomeMessage.charAt(i);
+                i++;
+                setTimeout(type, typingSpeed);
+            }
+        }
+        type();
+    }
+
+    // Trigger welcome message typing effect
+    typeWelcomeMessage();
+
+    // Add event listener to swap button
+    document.getElementById("swapButton").addEventListener("click", swapUnits);
+</script>
+
+</body>
+</html>
